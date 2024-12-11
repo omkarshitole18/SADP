@@ -1,0 +1,52 @@
+3. Write a Java Program to implement Abstract factory pattern for various functionalities of the mobile phone, such as taking a photo, recording a video.
+
+import java.io.*;
+import java.util.Scanner;
+abstract class Mobilephone{
+	public abstract void takingphoto();
+	public abstract void recordingvideo();
+}
+class Iphone extends Mobilephone{
+	Iphone(){
+		System.out.println("\n\tI Phone Information");
+	}
+	public void takingphoto(){
+		System.out.println("\n\tCamera Quality = 48megapixel");
+	}
+	public void recordingvideo(){
+		System.out.println("\n\tSuper-high-resolution video");
+	}
+}
+class Oneplus extends Mobilephone{
+	Oneplus(){
+		System.out.println("\n\tOne Plus Information");
+	}
+	public void takingphoto(){
+		System.out.println("\n\tCamera Quality = 35megapixel");
+	}
+	public void recordingvideo(){
+		System.out.println("\n\thigh-resolution video");
+	}
+}
+class A1Q3{
+	public static void main(String args[]){
+		System.out.println("\n\tAbstract Factory Method");
+		System.out.println("\n\tMobile Types:\n\t1.I Phone\n\t2.One Plus");
+		Scanner sc=new Scanner(System.in);
+		System.out.println("\n\tEnter Your Choise= ");
+		int mno=sc.nextInt();
+		if(mno==1){
+			Iphone i1=new Iphone();
+			i1.takingphoto();
+			i1.recordingvideo();
+		}
+		else if(mno==2){
+			Oneplus o1=new Oneplus();
+			o1.takingphoto();
+			o1.recordingvideo();
+		}
+		else{
+			System.out.println("\n\tPlease Enter Choise!!");
+		}
+	}
+}
