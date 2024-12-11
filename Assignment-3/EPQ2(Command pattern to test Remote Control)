@@ -1,0 +1,196 @@
+2. Write a Java Program to implement command pattern to test Remote Control.
+
+// Command Interface
+interface Command {
+    void execute();
+    void undo();
+}
+// Light class representing a light with on/off capabilities
+class Light {
+    public void on() {
+        System.out.println("Light is ON");
+    }
+
+    public void off() {
+        System.out.println("Light is OFF");
+    }
+}
+
+// Fan class representing a fan with on/off capabilities
+class Fan {
+    public void on() {
+        System.out.println("Fan is ON");
+    }
+
+    public void off() {
+        System.out.println("Fan is OFF");
+    }
+}
+
+// LightOnCommand class to turn on the light
+class LightOnCommand implements Command {
+    Light light;
+
+    public LightOnCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.on();
+    }
+
+    @Override
+    public void undo() {
+        light.off();
+    }
+}
+
+// LightOffCommand class to turn off the light
+class LightOffCommand implements Command {
+    Light light;
+
+    public LightOffCommand(Light light) {
+        this.light = light;
+    }
+
+    @Override
+    public void execute() {
+        light.off();
+    }
+
+    @Override
+    public void undo() {
+        light.on();
+    }
+}
+
+// FanOnCommand class to turn on the fan
+class FanOnCommand implements Command {
+    Fan fan;
+
+    public FanOnCommand(Fan fan) {
+        this.fan = fan;
+    }
+
+    @Override
+    public void execute() {
+        fan.on();
+    }
+
+    @Override
+    public void undo() {
+        fan.off();
+    }
+}
+
+// FanOffCommand class to turn off the fan
+class FanOffCommand implements Command {
+    Fan fan;
+
+    public FanOffCommand(Fan fan) {
+        this.fan = fan;
+    }
+
+    @Override
+    public void execute() {
+        fan.off();
+    }
+
+    @Override
+    public void undo() {
+        fan.on();
+    }
+}
+// RemoteControl class that can be configured with commands
+class RemoteControl {
+    Command[] onCommands;
+    Command[] offCommands;
+    Command undoCommand;
+
+    public RemoteControl() {
+        onCommands = new Command[2];
+        offCommands = new Command[2];
+
+        // Initialize commands with no operation
+        Command noCommand = new NoCommand();
+        for (int i = 0; i < 2; i++) {
+            onCommands[i] = noCommand;
+            offCommands[i] = noCommand;
+        }
+        undoCommand = noCommand;
+    }
+
+    public void setCommand(int slot, Command onCommand, Command offCommand) {
+        onCommands[slot] = onCommand;
+        offCommands[slot] = offCommand;
+    }
+
+    public void onButtonWasPressed(int slot) {
+        onCommands[slot].execute();
+        undoCommand = onCommands[slot];
+    }
+
+    public void offButtonWasPressed(int slot) {
+        offCommands[slot].execute();
+        undoCommand = offCommands[slot];
+    }
+
+    public void undoButtonWasPressed() {
+        undoCommand.undo();
+    }
+}
+
+// NoCommand class as a null object for initialization
+class NoCommand implements Command {
+    @Override
+    public void execute() {
+        System.out.println("No command assigned to this slot.");
+    }
+
+    @Override
+    public void undo() {
+        System.out.println("No command to undo.");
+    }
+}
+// Main class to test the Remote Control with Command Pattern
+public class A3EPQ2 {
+    public static void main(String[] args) {
+        RemoteControl remoteControl = new RemoteControl();
+
+        Light livingRoomLight = new Light();
+        Fan ceilingFan = new Fan();
+
+        // Creating Light commands
+        LightOnCommand lightOn = new LightOnCommand(livingRoomLight);
+        LightOffCommand lightOff = new LightOffCommand(livingRoomLight);
+
+        // Creating Fan commands
+        FanOnCommand fanOn = new FanOnCommand(ceilingFan);
+        FanOffCommand fanOff = new FanOffCommand(ceilingFan);
+
+        // Setting commands in remote control
+        remoteControl.setCommand(0, lightOn, lightOff);
+        remoteControl.setCommand(1, fanOn, fanOff);
+
+        // Simulate button presses
+        System.out.println("Pressing Light ON button:");
+        remoteControl.onButtonWasPressed(0);
+        
+        System.out.println("Pressing Light OFF button:");
+        remoteControl.offButtonWasPressed(0);
+        
+        System.out.println("Undo last operation:");
+        remoteControl.undoButtonWasPressed();
+
+        System.out.println("\nPressing Fan ON button:");
+        remoteControl.onButtonWasPressed(1);
+        
+        System.out.println("Pressing Fan OFF button:");
+        remoteControl.offButtonWasPressed(1);
+        
+        System.out.println("Undo last operation:");
+        remoteControl.undoButtonWasPressed();
+    }
+}
+
