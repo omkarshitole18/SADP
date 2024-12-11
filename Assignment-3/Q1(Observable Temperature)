@@ -1,0 +1,71 @@
+1. Write a JAVA Program to implement built-in support (java.util. Observable) Weather station with members temperature, humidity, pressure and methods measurementsChanged(), set Measurement(), get Temperature(), getHumidity). getPressure().
+
+import java.util.Observable;
+
+class WeatherStation extends Observable {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+
+    public void measurementsChanged() {
+        setChanged(); // Marks this Observable object as having been changed
+        notifyObservers(); // If this object has changed, then notify all of its observers
+    }
+
+    public void setMeasurement(float temperature, float humidity, float pressure) {
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.pressure = pressure;
+        measurementsChanged();
+    }
+
+    public float getTemperature() {
+        return temperature;
+    }
+
+    public float getHumidity() {
+        return humidity;
+    }
+
+    public float getPressure() {
+        return pressure;
+    }
+}
+
+class WeatherDisplay implements java.util.Observer {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+
+    @Override
+    public void update(Observable obs, Object arg) {
+        if (obs instanceof WeatherStation) {
+            WeatherStation weatherStation = (WeatherStation) obs;
+            this.temperature = weatherStation.getTemperature();
+            this.humidity = weatherStation.getHumidity();
+            this.pressure = weatherStation.getPressure();
+            display();
+        }
+    }
+
+    public void display() {
+        System.out.println("Current conditions:");
+        System.out.println("Temperature: " + temperature + "°C");
+        System.out.println("Humidity: " + humidity + "%");
+        System.out.println("Pressure: " + pressure + " hPa");
+    }
+}
+
+public class A3Q1{
+    public static void main(String[] args) {
+        WeatherStation weatherStation = new WeatherStation();
+        WeatherDisplay weatherDisplay = new WeatherDisplay();
+        
+        weatherStation.addObserver(weatherDisplay);
+
+        // Simulating new weather measurements
+        weatherStation.setMeasurement(25.5f, 65.0f, 1013.1f);
+        weatherStation.setMeasurement(28.3f, 70.2f, 1012.5f);
+    }
+}
+
