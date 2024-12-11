@@ -1,0 +1,35 @@
+2. Write a Java Program to implement Singleton pattern to create the singleton class LoggerService with a private constructor and a public static method to get the instance.
+
+public class A1EPQ2{
+    
+    private static volatile A1EPQ2 instance;
+
+    private A1EPQ2(){
+
+    }
+
+    public static A1EPQ2 getInstance() {
+        if (instance == null) {
+            synchronized (A1EPQ2.class) {
+                if (instance == null) {
+                    instance = new A1EPQ2();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void showMessage() {
+        System.out.println("\n\tInstance created from Singleton Class!");
+    }
+
+    public static void main(String[] args) {
+       
+        Thread thread1 = new Thread(() -> {
+            A1EPQ2 singleton = A1EPQ2.getInstance();
+            singleton.showMessage();
+        });
+
+	thread1.start();
+	}
+}
