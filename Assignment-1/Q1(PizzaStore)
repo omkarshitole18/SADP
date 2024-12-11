@@ -1,0 +1,101 @@
+Write a Java Program to implement Factory method for Pizza Store with createPizza(), orderPizza(), prepare(), Bake(), cut(), box(). 
+Use this to create a variety of pizza's like NyStyleCheese Pizza, ChicagoStyleCheese Pizza etc.
+
+import java.io.*;
+import java.util.Scanner;
+interface Pizzastore{
+	void prepare();
+	void bake();
+	void cut(int s);
+	void box();
+}
+class Nystylecheesepizza implements Pizzastore{
+	Nystylecheesepizza(int q,int s){
+		String pname="New York Style Cheese Pizza";
+		int quantity=q;
+		int cost=299;
+		int slices=s;
+	}
+	public void createPizza(String nm){
+		System.out.println("\n\tNew York Style Cheese Pizza\n\t1.Wheat floar Pizza base\n\t2.Topping of Veggies\n\t3.Full loaded cheese");
+	}
+	public void orderPizza(int cost,int q){
+		System.out.println("\n\tYour Bill= "+cost*q);
+	}
+	public void prepare(){
+                System.out.println("\n\tPreparing Your Pizza");
+        }
+        public void bake(){
+                System.out.println("\n\tBaking Your Pizza");
+        }
+        public void cut(int s){
+                System.out.println("\n\tCutting Your Pizza Into "+s+" slices");
+        }
+        public void box(){
+                System.out.println("\n\tPackaging Your Pizza in Box");
+        }
+
+}
+class Chicagostylecheesepizza implements Pizzastore{
+	Chicagostylecheesepizza(int q,int s){
+		String pname="Chicago Style Cheese Pizza";
+		int quantity=q;
+		int cost=269;
+		int slices=s;
+	}
+	public void createPizza(String nm){
+		System.out.println("\n\tChicago Style Cheese Pizza\n\t1.Refined Wheat Floar Pizza base\n\t2.Topping of Panner & Veggies\n\t3.Cheese");
+	}
+	public void orderPizza(int cost,int q){
+		System.out.println("\n\tYour Bill= "+cost*q);
+	}
+	public void prepare(){
+                System.out.println("\n\tPreparing Your Pizza");
+        }
+        public void bake(){
+                System.out.println("\n\tBaking Your Pizza");
+        }
+        public void cut(int s){
+                System.out.println("\n\tCutting Your Pizza Into "+s+" slices");
+        }
+        public void box(){
+                System.out.println("\n\tPackaging Your Pizza in Box");
+        }
+}
+class A1Q1{
+	public static void main(String args[]){
+		System.out.println("\n\tWelcome To Pizza Store");
+		System.out.println("\n\t*** Menu Card ***\n\t1.New York Style Cheese Pizza\n\t2.Chicago Style Cheese Pizza");
+		Scanner sc=new Scanner(System.in);
+		System.out.println("\n\tEnter Your Order= ");
+		int pno=sc.nextInt();
+		System.out.println("\n\tEnter Your Quantity= ");
+		int q=sc.nextInt();
+		System.out.println("\n\tEnter Pizza Slices= ");
+		int s=sc.nextInt();
+		if(pno==1){
+			int c1=299;
+			Nystylecheesepizza n1=new Nystylecheesepizza(q,s);
+			n1.createPizza("New York Style Cheese Pizza");
+			n1.prepare();
+			n1.bake();
+			n1.cut(s);
+			n1.box();
+			n1.orderPizza(c1,q);
+			
+		}
+		else if(pno==2){
+			int c2=269;
+			Chicagostylecheesepizza c1=new Chicagostylecheesepizza(q,s);
+                        c1.createPizza("Chicago Style Cheese Pizza");
+                        c1.prepare();
+                        c1.bake();
+                        c1.cut(s);
+                        c1.box();
+                        c1.orderPizza(c2,q);
+		}
+		else{
+			System.out.println("\n\tNo Any Order is Placed!!");
+		}		
+	}
+}
