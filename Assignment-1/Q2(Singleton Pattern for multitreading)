@@ -1,0 +1,41 @@
+2. Write a Java Program to implement Singleton pattern for multithreading.
+
+public class A1Q2{
+    
+    private static volatile A1Q2 instance;
+
+    private A1Q2(){
+
+    }
+
+    public static A1Q2 getInstance() {
+        if (instance == null) {
+            synchronized (A1Q2.class) {
+                if (instance == null) {
+                    instance = new A1Q2();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void showMessage() {
+        System.out.println("\n\tHello from Singleton!");
+    }
+
+    public static void main(String[] args) {
+       
+        Thread thread1 = new Thread(() -> {
+            A1Q2 singleton = A1Q2.getInstance();
+            singleton.showMessage();
+        });
+
+        Thread thread2 = new Thread(() -> {
+            A1Q2 singleton = A1Q2.getInstance();
+            singleton.showMessage();
+        });
+	
+        thread1.start();
+        thread2.start();
+    }
+}
