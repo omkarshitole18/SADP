@@ -1,0 +1,68 @@
+1. Write a java program to implement Adapter pattern to design Heart Model to Beat Model.
+
+class HeartBeatModel 
+   {
+    public void start() {
+        System.out.println("HeartBeatModel started.");
+    }
+
+    public void stop() {
+        System.out.println("HeartBeatModel stopped.");
+    }
+
+    public int getHeartRate() {
+        return 70;
+    }
+}
+
+interface BeatModel {
+    void initialize();
+    void on();
+    void off();
+    int getBPM();
+}
+
+class HeartBeatModelAdapter implements BeatModel
+ {
+    private HeartBeatModel heartBeatModel;
+
+    public HeartBeatModelAdapter(HeartBeatModel heartBeatModel) 
+    {
+        this.heartBeatModel = heartBeatModel;
+    }
+ 
+    public void initialize() 
+    {
+        
+    }
+
+    public void on() 
+    {
+        heartBeatModel.start();
+    }
+
+    
+    public void off() 
+    {
+        heartBeatModel.stop();
+    }
+
+    public int getBPM() 
+    {
+        return heartBeatModel.getHeartRate();
+    }
+}
+public class A2EPQ1 
+{
+    public static void main(String[] args) 
+	{
+        HeartBeatModel heartBeatModel = new HeartBeatModel();
+        BeatModel beatModel = new HeartBeatModelAdapter(heartBeatModel);
+
+        beatModel.initialize();
+        beatModel.on();
+        System.out.println("Current BPM: " + beatModel.getBPM());
+        beatModel.off();
+    }
+}
+
