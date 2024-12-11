@@ -1,0 +1,53 @@
+1. Write a Java Program to implement I/O Decorator for converting uppercase letters to lowercase letters.
+
+import java.util.Scanner;
+
+//Component Interface:Defines core functionalities.
+interface IReader {
+    String read();
+}
+
+//Concrete component:Implements component interface and provide basic behavior.
+class StandardInputReader implements IReader {
+    private Scanner scanner = new Scanner(System.in);
+
+    @Override
+    public String read() {
+        return scanner.nextLine();
+    }
+}
+
+//Decorator:abstract class that implements the Component interface and has a reference to a Component object. 
+//This class defines the interface for the decorators and includes a reference to a Component instance.
+abstract class ReaderDecorator implements IReader {
+    protected IReader decoratedReader;
+
+    public ReaderDecorator(IReader decoratedReader) {
+        this.decoratedReader = decoratedReader;
+    }
+}
+
+//Concrete Decorators: Classes that extend the Decorator class and add additional behavior to the Component.
+class LowercaseDecorator extends ReaderDecorator {
+    public LowercaseDecorator(IReader decoratedReader) {
+        super(decoratedReader);
+    }
+
+    @Override
+    public String read() {
+        String input = decoratedReader.read();
+        return input.toLowerCase();
+    }
+}
+
+public class A2Q1 {
+    public static void main(String[] args) {
+        IReader standardReader = new StandardInputReader();
+        IReader lowercaseReader = new LowercaseDecorator(standardReader);
+
+        System.out.println("Enter Input String:");
+        String input = lowercaseReader.read();
+        System.out.println("Output: " + input);
+    }
+}
+
