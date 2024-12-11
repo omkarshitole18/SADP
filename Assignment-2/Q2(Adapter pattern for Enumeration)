@@ -1,0 +1,27 @@
+2. Write a Java Program to implement Adapter pattern for Enumeration iterator
+
+import java.util.*;
+
+public class A2Q2{
+    public static void main(String[] args) {
+        // Create a vector  
+        Vector<String> vector = new Vector<>();
+        // Adding elements using add() method of List
+        vector.add("c");
+        vector.add("java");
+        vector.add("python");
+        vector.add("html");
+        
+        // Get Enumeration from the vector
+        Enumeration<String> enumeration = vector.elements();
+        
+        // Adapt Enumeration to Iterator using EnumerationIterator
+        Iterator<String> iterator = new EnumerationIterator<>(enumeration);
+        
+        // Iterate using Iterator
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    }
+}
+
