@@ -1,0 +1,91 @@
+1. Write a Java Program to implement Abstract factory pattern to create cars and specifications specific to North America, Europe.
+
+import java.io.*;
+import java.util.Scanner;
+interface CarFactory {
+    Car createCar();
+    CarSpecification createSpecification();
+}
+
+class NorthAmericaCarFactory implements CarFactory {
+    public Car createCar() {
+        return new Sedan();
+    }
+
+    public CarSpecification createSpecification() {
+        return new NorthAmericaSpecification();
+    }
+}
+
+class EuropeCarFactory implements CarFactory {
+    public Car createCar() {
+        return new Hatchback();
+    }
+
+    public CarSpecification createSpecification() {
+        return new EuropeSpecification();
+    }
+}
+
+interface Car {
+    void assemble();
+}
+
+interface CarSpecification {
+    void display();
+}
+
+class Sedan implements Car {
+    public void assemble() {
+        System.out.println("\n\tAssembling Sedan car.");
+    }
+}
+
+class Hatchback implements Car {
+    public void assemble() {
+        System.out.println("\n\tAssembling Hatchback car.");
+    }
+}
+
+class NorthAmericaSpecification implements CarSpecification {
+    public void display() {
+        System.out.println("\n\tNorth America Car Specification: Safety features compliant with local regulations.");
+    }
+}
+
+class EuropeSpecification implements CarSpecification {
+    public void display() {
+        System.out.println("\n\tEurope Car Specification: Fuel efficiency and emissions compliant with EU standards.");
+    }
+}
+
+public class A1EPQ1{
+    public static void main(String[] args) {
+
+	System.out.println("\n\tWelcome To Car Factory");
+	Scanner sc=new Scanner(System.in);
+	System.out.println("\n\tCar Nationality: \n\t1.North America \n\t2.Europe");
+	int cno=sc.nextInt();
+	if(cno==1){       
+		CarFactory northAmericaFactory = new NorthAmericaCarFactory();
+		Car northAmericaCar = northAmericaFactory.createCar();
+		CarSpecification northAmericaSpec = northAmericaFactory.createSpecification();
+
+		northAmericaCar.assemble();
+		northAmericaSpec.display();
+	}
+	else if(cno==2){
+		CarFactory europeFactory = new EuropeCarFactory();
+		Car europeCar = europeFactory.createCar();
+		CarSpecification europeSpec = europeFactory.createSpecification();
+
+		europeCar.assemble();
+		europeSpec.display();
+	}
+	else{
+		System.out.println("\n\tPlease Enter Valid Choise!!");
+	}
+    }
+}
+
+
