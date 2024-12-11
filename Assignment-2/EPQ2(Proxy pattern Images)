@@ -1,0 +1,58 @@
+2. Write a java program to implement Proxy Pattern which efficiently manages the loading and displaying of images by introducing a proxy that controls access to the real image object.
+
+// Image Interface
+interface Image {
+    void display();
+}
+
+// RealImage Class (Real Subject)
+class RealImage implements Image {
+    private final String filename;
+
+    public RealImage(String filename) {
+        this.filename = filename;
+        loadImage();
+    }
+
+    private void loadImage() {
+        System.out.println("Loading image: " + filename);
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Displaying image: " + filename);
+    }
+}
+
+// ImageProxy Class (Proxy)
+class ImageProxy implements Image {
+    private RealImage realImage;
+    private final String filename;
+
+    public ImageProxy(String filename) {
+        this.filename = filename;
+    }
+
+    @Override
+    public void display() {
+        if (realImage == null) {
+            realImage = new RealImage(filename); // Load image only when needed
+        }
+        realImage.display(); // Delegate display to the real image
+    }
+}
+
+// Client Code
+public class A2EPQ2{
+    public static void main(String[] args) {
+        Image image1 = new ImageProxy("photo1.jpg");
+        Image image2 = new ImageProxy("photo2.jpg");
+
+        // Image will be loaded only when display() is called
+        image1.display();
+        System.out.println();
+        image2.display();
+        System.out.println();
+        image1.display(); // Image is already loaded, so this call will be faster
+    }
+}
